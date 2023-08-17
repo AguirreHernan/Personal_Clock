@@ -1,0 +1,106 @@
+*{
+  transition: 0.25s;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-decoration: 0;
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: Seven;
+  src: url(./assets/fonts/SevenSegment.ttf);
+}
+
+:root{
+  
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --color-1: #ffffff;
+  --color-12: #e4e4ff;
+  --color-2: #222222;
+  --color-3: #666666;
+  --s-clr-1: #9020ff;
+  --s-clr-2: #ff803a;
+
+  --hover-clr: #aaaaaa20;
+}
+
+body{
+  background-color: var(--bg-color-1);
+  color: var(--font-color-2);
+}
+
+#sopa{
+  font-size: 32px;
+}
+
+header{
+  height: 12vh;
+  box-shadow:  var(--color-12) 1px 1px 15px 5px;
+  color: var(--s-clr-1);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+h1{
+  margin: 0 150px;
+}
+
+#content{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 88vh;
+  width: 100%;
+}
+
+aside{
+  padding-top: 25px;
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20vw;
+  box-shadow:  var(--color-12) 1px 1px 15px 5px;
+}
+
+#option{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+  padding: 15px 30px;
+  border-radius: 10px;
+}
+#option:hover{
+  background-color: var(--hover-clr);
+}
+#option figure{
+  width: 45px;
+}
+#option figure img{
+  width: 100%;
+}
+#option p{
+  font-size: 17px;
+}
+#option:hover > p{
+  color: var(--s-clr-2);
+}
+
+main{
+  width: 80vw;
+  height: 88vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+

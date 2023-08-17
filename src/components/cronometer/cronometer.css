@@ -1,0 +1,102 @@
+@font-face {
+    font-family: Seven;
+    src: url(./assets/fonts/SevenSegment.ttf);
+  }
+  
+:root{
+    
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  
+    --color-1: #ffffff;
+    --color-12: #e4e4ff;
+    --color-2: #222222;
+    --color-3: #666666;
+    --s-clr-1: #9020ff;
+    --s-clr-2: #ff803a;
+    --fade: #1000108f;
+  
+    --hover-clr: #aaaaaa20;
+}
+
+#cronometer-container{
+    z-index: 1;
+    display: none;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: 0;
+    height: 0;
+}
+
+#cronometer{
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#cronometer-btns{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: centere;
+    margin: 25px 0;
+}
+
+.cro-btn{
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--s-clr-1);
+    background-color: var(--color-12);
+    border-radius: 25px;
+    padding: 10px 20px;
+    margin: 0 12px;
+}
+
+.cro-btn:hover{
+    background-color: var(--s-clr-1);
+    color: var(--color-1);
+}
+
+#stop-cro-btn{
+    display: none;
+}
+
+
+#marks-container{
+    overflow: hidden;
+    overflow: hidden;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#marks-titles  th{
+    margin: 0;
+    width: 100px;
+    text-align: center;
+}
+
+tbody{
+    overflow: auto;
+    height: 155px;
+}
+
+.mark{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid var(--color-12);
+}
+
+.mark td{
+    margin: 3px 1px;
+    width: 100px;
+    text-align: center;
+}
