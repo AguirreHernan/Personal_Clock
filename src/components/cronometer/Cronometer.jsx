@@ -55,26 +55,26 @@ export default function Cronometer(){
         <div id="cronometer-container">
             <div id="cronometer">
                 <div id="cronometer-time">
-                <TimeInput
-                max={99}
-                timeUnit={hour}
-                setTimeUnit={setHour}  
-                readOnly={true}
-                ></TimeInput>
+                    <TimeInput
+                    max={99}
+                    timeUnit={hour}
+                    setTimeUnit={setHour}  
+                    readOnly={true}
+                    ></TimeInput>
 
-                <TimeInput
-                max={60}
-                timeUnit={minute}
-                setTimeUnit={setMinute}  
-                readOnly={true}
-                ></TimeInput>
+                    <TimeInput
+                    max={60}
+                    timeUnit={minute}
+                    setTimeUnit={setMinute}  
+                    readOnly={true}
+                    ></TimeInput>
 
-                <TimeInput
-                max={60}
-                timeUnit={second}
-                setTimeUnit={setSecond}  
-                readOnly={true}
-                ></TimeInput>
+                    <TimeInput
+                    max={60}
+                    timeUnit={second}
+                    setTimeUnit={setSecond}  
+                    readOnly={true}
+                    ></TimeInput>
                 </div>
                 <div id="cronometer-btns">
                     <button 
