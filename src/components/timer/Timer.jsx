@@ -1,16 +1,19 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import TimeInput from "./TimerInput";
 
 import goback from '../../assets/images/goback.svg';
 
-export default function Timer({time}){
+export default function Timer({time, timerContainerRef, versionRef}){
     let [hour, setHour] = useState(time[0]);
     let [minute, setMinute] = useState(time[1]);
     let [second, setSecond] = useState(time[2]);
     let [timeRunning, setTimeRunning] = useState(false);
     let [timeInPlace, setTimeInPlace] = useState(false);
+
+    const startRef = useRef(null);
+    const stopRef = useRef(null);
 
     let refreshTime = (timeUnit)=>{
       if(parseInt(timeUnit) <= 10) timeUnit = '0' + (parseInt(timeUnit) - 1).toString();
@@ -55,17 +58,17 @@ export default function Timer({time}){
     }, [hour, minute, second, timeRunning, timeInPlace, time]);
     
     return(
-      <div id='timer-container'>
+      <div id='timer-container' ref={timerContainerRef}>
         <div id="timer-top">
           <figure id="goback-btn"
             onClick={()=>{
               setTimeInPlace(false);
               setTimeRunning(false);
-              document.getElementById('timer-container').style.display = 'none';
-              document.getElementById('timer-versions-container').style.display = 'flex';
+              timerContainerRef.current.style.display = 'none';
+              versionRef.current.style.display = 'flex';
 
-              document.getElementById('start-btn').style.display = 'inline';
-              document.getElementById('stop-btn').style.display = 'none';
+              startRef.current.style.display = 'inline'
+              stopRef.current.style.display = 'none';
             }}
           >
             <img src={goback}></img>
@@ -104,23 +107,25 @@ export default function Timer({time}){
   
           <button 
           id="start-btn"
+          ref={startRef}
           className='timer-buttons'
           onClick={() => {
             setTimeInPlace(true);
             setTimeRunning(true);
             if(hour == '00' && minute == '00' && second == '00') return;
-            document.getElementById('stop-btn').style.display = 'inline';
-            document.getElementById('start-btn').style.display = 'none';
+            stopRef.current.style.display = 'inline'
+            startRef.current.style.display = 'none';
           }}
           >Start</button>
 
           <button 
           id="stop-btn"
+          ref={stopRef}
           className='timer-buttons'
           onClick={() => {
             setTimeRunning(false);
-            document.getElementById('start-btn').style.display = 'inline';
-            document.getElementById('stop-btn').style.display = 'none';
+            startRef.current.style.display = 'inline'
+            stopRef.current.style.display = 'none';
           }}
           >Stop</button>
   
@@ -129,8 +134,8 @@ export default function Timer({time}){
           onClick={()=>{
             setTimeInPlace(true);
             setTimeRunning(false);
-            document.getElementById('start-btn').style.display = 'inline';
-            document.getElementById('stop-btn').style.display = 'none';
+            startRef.current.style.display = 'inline'
+            stopRef.current.style.display = 'none';
             setHour('00');
             setMinute('00');
             setSecond('00');

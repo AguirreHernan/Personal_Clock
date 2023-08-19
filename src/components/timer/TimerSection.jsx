@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Timer from "./Timer";
 import TimerVersionCreator from "./TimerVersionCreator";
@@ -11,7 +11,7 @@ const getId = (x)=>{
     return document.getElementById(x);
 }
 
-function TimerVersion({description, hr, min, sec, func, idx, dlt}){
+function TimerVersion({description, hr, min, sec, func, idx, dlt, timerContainerRef, versionRef}){
     return(
         <div className="timer-version">
             <div className="top-side">
@@ -34,7 +34,7 @@ function TimerVersion({description, hr, min, sec, func, idx, dlt}){
 
                 <button
                 onClick={()=>{
-                    let timerContainer = getId('timer-container');
+                    let timerContainer = timerContainerRef.current;
                     timerContainer.style.display = 'flex';
                     timerContainer.style.flexDirection = 'column';
                     timerContainer.style.justifyContent = 'center';
@@ -42,7 +42,7 @@ function TimerVersion({description, hr, min, sec, func, idx, dlt}){
                     timerContainer.style.height = '88vh';
                     timerContainer.style.width = '100%';
 
-                    getId('timer-versions-container').style.display = 'none';
+                    versionRef.current.style.display = 'none';
                     func(hr, min, sec);
                  }}
                 className="start-timer-version"
@@ -53,6 +53,10 @@ function TimerVersion({description, hr, min, sec, func, idx, dlt}){
 }
 
 export default function TimerSection(){
+    const timerContainerRef = useRef(null);
+    const versionRef = useRef(null);
+    const creatorRef = useRef(null);
+
     let [timeVersions, setTimeVersions] = useState(
         JSON.parse(localStorage.getItem('versions')) || []
     );
@@ -83,6 +87,8 @@ export default function TimerSection(){
                 key={idx}
                 idx={idx}
                 dlt={deleteVersion}
+                timerContainerRef={timerContainerRef}
+                versionRef={versionRef}
                 ></TimerVersion> ;
             })
         )
@@ -113,12 +119,12 @@ export default function TimerSection(){
     
     return(
         <div id="timer-section">
-            <div id="timer-versions-container">
+            <div id="timer-versions-container" ref={versionRef}>
                 <button 
                 id="add-new-btn"
                 onClick={()=>{
-                    document.getElementById('version-creator-container').style.opacity = '1';
-                    document.getElementById('version-creator-container').style.display = 'flex';
+                    creatorRef.current.style.opacity = '1';
+                    creatorRef.current.style.display = 'flex';
                 }}
                 >+</button>
 
@@ -128,8 +134,8 @@ export default function TimerSection(){
 
             </div>
             
-            <TimerVersionCreator createNewVersion={createNewVersion}></TimerVersionCreator>
-            <Timer time={arr}></Timer>
+            <TimerVersionCreator createNewVersion={createNewVersion}  creatorRef={creatorRef}></TimerVersionCreator>
+            <Timer time={arr} versionRef={versionRef} timerContainerRef={timerContainerRef}></Timer>
         </div>
     )
 }

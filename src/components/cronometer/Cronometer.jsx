@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from 'react'
+import React, { useEffect, useRef, useState } from "react";
 
 import TimeInput from "../timer/TimerInput";
 import './cronometer.css';
@@ -20,8 +19,12 @@ export default function Cronometer(){
     let [second, setSecond] = useState('00');
     let [markIdx, setMarkIdx] = useState('1');
 
+    let [lastMark, setLastMark] = useState('00:00:00');
     let [listMarks, setListMarks] = useState([]);
     let [isRunning, setIsRunning] = useState(false);
+
+    const startCroRef = useRef(null);
+    const stopCroRef = useRef(null);
 
     let updateTime = (timeUnit)=>{
         if(parseInt(timeUnit) < 9) timeUnit = '0' + (parseInt(timeUnit) + 1).toString();
@@ -78,41 +81,40 @@ export default function Cronometer(){
                 </div>
                 <div id="cronometer-btns">
                     <button 
-                    id="start-cro-btn"
+                    ref={startCroRef}
                     className="cro-btn"
                     onClick={()=>{
-                        document.getElementById('stop-cro-btn').style.display = 'inline';
-                        document.getElementById('start-cro-btn').style.display = 'none';
+                        stopCroRef.current.style.display = 'inline';
+                        startCroRef.current.style.display = 'none';
                         setIsRunning(true);
                     }}
                     >Start</button>
 
                     <button 
-                    id="stop-cro-btn"
+                    ref={stopCroRef}
                     className="cro-btn"
                     onClick={()=>{
-                        document.getElementById('start-cro-btn').style.display = 'inline';
-                        document.getElementById('stop-cro-btn').style.display = 'none';
+                        startCroRef.current.style.display = 'inline';
+                        stopCroRef.current.style.display = 'none';
                         setIsRunning(false);
                     }}
                     >Stop</button>
 
                     <button 
-                    id="create-mark-btn"
                     className="cro-btn"
                     onClick={()=>{
                         if(hour == '00' && minute == '00' && second == '00') return;
-                            setListMarks(prevMark => {
-                                return prevMark.concat(
-                                    <Mark
+
+                        setListMarks(prevMark => {
+                            return prevMark.concat(
+                                <Mark
                                     key={markIdx}
                                     markNum={markIdx}
                                     time={'00:00:00'}
                                     total={`${hour}:${minute}:${second}`}
                                 ></Mark>
-                                );
-                            });
-
+                            );
+                        });
                         setMarkIdx((parseInt(markIdx) + 1).toString());
                         
                     }}
@@ -125,8 +127,8 @@ export default function Cronometer(){
                         setMinute('00');
                         setSecond('00');
                         setIsRunning(false);
-                        document.getElementById('start-cro-btn').style.display = 'inline';
-                        document.getElementById('stop-cro-btn').style.display = 'none';
+                        startCroRef.current.style.display = 'inline';
+                        stopCroRef.current.style.display = 'none';
                     }}
                     >Reset</button>
                 </div>
@@ -144,6 +146,7 @@ export default function Cronometer(){
                     {listMarks}
                 </tbody>
             </table>
+
         </div>
     )
 }

@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import goback from '../../assets/images/goback.svg';
 
 import TimeInput from "./TimerInput";
 
 
-export default function TimerVersionCreator ({createNewVersion}){
+export default function TimerVersionCreator ({createNewVersion, creatorRef}){
     let [sec, setSec] = useState('00');
     let [min, setMin] = useState('00');
     let [hr, setHr] = useState('00');
+
+    const opStateRef = useRef(null);
 
     function manageMessage(comp, msg, color){
         comp.textContent = msg;
@@ -26,22 +28,25 @@ export default function TimerVersionCreator ({createNewVersion}){
     }
 
     return(
-        <div id="version-creator-container">
+        <div id="version-creator-container" ref={creatorRef}>
             <div id="version-creator">
                 <div id="description-top-side">
+
                     <figure id="back-to-versions"
-                    onClick={()=>{
-                        document.getElementById('version-creator-container').style.opacity = '0';
-                        setTimeout(() => {
-                            document.getElementById('version-creator-container').style.display = 'none';
-                        }, 250);
-                        clearInput();
-                    }}
+                        onClick={()=>{
+                            creatorRef.current.style.opacity = '0';
+                            setTimeout(() => {
+                                creatorRef.current.style.display = 'none';
+                            }, 250);
+                            clearInput();
+                        }}
                     > 
                         <img src={goback}></img>
                     </figure>
+
                     <h3>Description:</h3>
                     <input type="text" id="description-input" placeholder="Write a description" maxLength={'55'}></input>
+
                 </div>
 
                 <div>
@@ -67,11 +72,11 @@ export default function TimerVersionCreator ({createNewVersion}){
                     ></TimeInput>
                 </div>
 
-                <p id="operation-state">placeholder text</p>
+                <p id="operation-state" ref={opStateRef}>placeholder text</p>
 
                 <button id="submit-time"
                 onClick={()=>{
-                    const state = document.getElementById('operation-state');
+                    const state = opStateRef.current;
                     let description = document.getElementById('description-input').value;
                     if(description == ''){
                         manageMessage(state, 'No description give, please fullfill', '#f06094');
