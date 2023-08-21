@@ -19,7 +19,11 @@ export default function Cronometer(){
     let [second, setSecond] = useState('00');
     let [markIdx, setMarkIdx] = useState('1');
 
-    let [lastMark, setLastMark] = useState('00:00:00');
+    let [lastMark, setLastMark] = useState({
+        hr: '00',
+        min: '00',
+        sec: '00'
+    });
     let [listMarks, setListMarks] = useState([]);
     let [isRunning, setIsRunning] = useState(false);
 
@@ -30,7 +34,12 @@ export default function Cronometer(){
         if(parseInt(timeUnit) < 9) timeUnit = '0' + (parseInt(timeUnit) + 1).toString();
         else timeUnit = (parseInt(timeUnit) + 1).toString();
         return timeUnit;
-      }
+    }
+
+    let correctWriting = (timeUnit)=>{
+        if(parseInt(timeUnit) < 10) timeUnit = '0' + timeUnit.toString();
+        return timeUnit;
+    }
 
 
     useEffect(()=>{
@@ -106,15 +115,23 @@ export default function Cronometer(){
                         if(hour == '00' && minute == '00' && second == '00') return;
 
                         setListMarks(prevMark => {
+                            let h = correctWriting(parseInt(hour) - parseInt(lastMark.hr));
+                            let m = correctWriting(parseInt(minute) - parseInt(lastMark.min));
+                            let s = correctWriting(parseInt(second) - parseInt(lastMark.sec));
                             return prevMark.concat(
                                 <Mark
                                     key={markIdx}
                                     markNum={markIdx}
-                                    time={'00:00:00'}
+                                    time={`${h}:${m}:${s}`}
                                     total={`${hour}:${minute}:${second}`}
                                 ></Mark>
                             );
                         });
+                        setLastMark({
+                            hr: hour,
+                            min: minute,
+                            sec: second
+                        })
                         setMarkIdx((parseInt(markIdx) + 1).toString());
                         
                     }}
