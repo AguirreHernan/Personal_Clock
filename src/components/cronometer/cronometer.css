@@ -22,12 +22,12 @@
 
 #cronometer-container{
     z-index: 1;
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: center;
-    width: 0;
-    height: 0;
+    width: 80vw;
+    height: 88vh;
 }
 
 #cronometer{

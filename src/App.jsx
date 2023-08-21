@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import TimerSection from './components/timer/TimerSection';
 import Cronometer from './components/cronometer/cronometer';
@@ -21,7 +21,7 @@ function OptionBtn({source, feature, click}){
 
 
 function App() {
-
+  let [renderTimer, setRenderTimer] = useState(true);
 
   return (
     <div id='app'>
@@ -38,25 +38,20 @@ function App() {
             source={logo}
             feature={'Timer'}
             click={()=>{
-              document.getElementById('timer-section').style.display = 'flex';
-              document.getElementById('version-creator-container').style.width = '80vw';
-              document.getElementById('cronometer-container').style.display = 'none';
+              setRenderTimer(true);
             }}
             ></OptionBtn>
             <OptionBtn source={logo} feature={'Cronometer'}
             click={()=>{
-              document.getElementById('cronometer-container').style.display = 'flex';
-              document.getElementById('cronometer-container').style.height = '88vh';
-              document.getElementById('cronometer-container').style.width = '80vw';
-              document.getElementById('timer-section').style.display = 'none';
+              setRenderTimer(false)
             }}
             ></OptionBtn>
           </ul>
         </aside>
 
         <main>
-          <TimerSection></TimerSection>
-          <Cronometer></Cronometer>
+          {renderTimer ? <TimerSection></TimerSection>
+                       : <Cronometer></Cronometer>}
         </main>
 
       </div>
